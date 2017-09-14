@@ -99,7 +99,7 @@ describe 'refinements' do
 
       posts.count.should == 2
       posts.first.should be_published
-      posts.all? {|p| p.published_at.present? }.should be_true
+      posts.all? {|p| p.published_at.present? }.should be_truthy
     end
 
     it 'can be called multiple times on a model' do
