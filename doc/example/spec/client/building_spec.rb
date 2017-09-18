@@ -49,7 +49,7 @@ describe 'building' do
     it 'can create an object based on a collection for an association' do
       comment = post.comments.first_or_initialize(content: "Am I the first comment?")
       comment.should be_new
-      comment.post_id.should == post.id
+      comment.post.should == post.id
       comment.save.should be_truthy
     end
 

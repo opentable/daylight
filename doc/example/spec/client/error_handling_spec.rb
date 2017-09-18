@@ -15,7 +15,7 @@ describe 'error handling' do
 
   it 'reports on bad create attributes' do
     post = API::Post.new(foo: 'bar')
-    expect{ post.save }.to raise_error(ActiveResource::BadRequest, /unknown attribute: foo/i)
+    expect{ post.save }.to raise_error(ActiveResource::BadRequest, /unknown attribute 'foo'/i)
   end
 
   it 'reports on bad query parameters' do

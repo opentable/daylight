@@ -10,6 +10,7 @@ require 'rspec/autorun'
 
 require 'daylight/api'
 require 'api'
+require 'pry'
 
 Daylight::API.setup! endpoint: 'http://daylight.test', version: 'v1'
 
