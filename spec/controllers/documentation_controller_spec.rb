@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DaylightDocumentation::DocumentationController do
+RSpec.describe DaylightDocumentation::DocumentationController, type: :controller do
 
   class TestModel < ActiveRecord::Base
   end
