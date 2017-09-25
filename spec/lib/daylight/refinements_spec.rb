@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight do
+RSpec.describe Daylight do
 
   class RefinementTestClass < Daylight::API
     scopes :foo, :bar

@@ -16,7 +16,7 @@ class TestAPIDescendantXML < Daylight::API
   end
 end
 
-describe Daylight::API do
+RSpec.describe Daylight::API do
   def parse_xml(xml)
     data = Hash.from_xml(xml)
 

@@ -12,7 +12,7 @@ end
 class AssociatedThroughTest < ActiveRecord::Base
 end
 
-class HasOneSerializerTestController < ActionController::Base
+class HasOneSerializerTestController < ActionController::API
   # The read_only values will be activated based on Serializer
   def show
     render json: HasOneSerializerTest.find(params[:id])
@@ -36,7 +36,7 @@ class EmbedHasOneSerializerTestSerializer < ActiveModel::Serializer
   has_one :associated_through_test, through: :associated_test   # tests through
 end
 
-describe HasOneSerializerExt, type: [:controller, :routing] do
+RSpec.describe HasOneSerializerExt, type: :controller do
 
   def self.controller_class
     HasOneSerializerTestController

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::AssociationPersistance do
+RSpec.describe Daylight::AssociationPersistance do
 
   class GrandchildPersistanceTestClass < Daylight::API
   end
@@ -30,23 +30,23 @@ describe Daylight::AssociationPersistance do
   describe :changed? do
 
     it 'returns false if the object is not modified' do
-      object.changed?.should be_false
+      object.changed?.should be_falsey
     end
 
     it 'returns true if the object has a field modified' do
       object.name = 'this is a change'
 
-      object.changed?.should be_true
+      object.changed?.should be_truthy
     end
 
     it 'returns true if the object has a modified association' do
       object.parent = RelatedPersistanceTestClass.new
 
-      object.changed?.should be_true
+      object.changed?.should be_truthy
     end
 
     it 'returns true if the object is new' do
-      PersistanceTestClass.new.changed?.should be_true
+      PersistanceTestClass.new.changed?.should be_truthy
     end
   end
 

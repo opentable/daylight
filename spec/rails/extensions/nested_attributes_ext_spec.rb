@@ -34,7 +34,7 @@ class HabtmChildNestedAttributeTest < ActiveRecord::Base
   has_and_belongs_to_many :foo, class_name: 'HabtmParentNestedAttributeTest'
 end
 
-describe NestedAttributesExt, type: [:model] do
+RSpec.describe NestedAttributesExt, type: [:model] do
 
   migrate do
     create_table :nested_attribute_tests do |t|
@@ -255,7 +255,6 @@ describe NestedAttributesExt, type: [:model] do
       test.save!
 
       test.reload.foo.count.should == 2
-
       test.foo_attributes = [test.foo.first.as_json]
 
       lambda { record.save! }.should_not raise_error

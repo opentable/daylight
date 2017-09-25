@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-class TestAssociatedRouteController < ActionController::Base
+class TestAssociatedRouteController < ActionController::API
   def associated
     render text: [params[:controller], params[:id], params[:associated]].join('/')
   end
@@ -12,12 +12,12 @@ class TestAssociatedRoutesController < TestAssociatedRouteController
   end
 end
 
-class TestMethodRoute < ActiveRecord::Base;
+class TestMethodRoute < ActiveRecord::API;
   def foo; end
   def bar; end
 end
 
-class TestMethodRouteController < ActionController::Base
+class TestMethodRouteController < ActionController::API
   def remoted
     render text: [params[:controller], params[:id], params[:remoted]].join('/')
   end
@@ -28,7 +28,7 @@ class TestAltModel < ActiveRecord::Base;
   def bar; end
 end
 
-class TestMethodRouteAltModelController < ActionController::Base
+class TestMethodRouteAltModelController < ActionController::API
   def self.model
     TestAltModel
   end
@@ -38,7 +38,7 @@ class TestMethodRouteAltModelController < ActionController::Base
   end
 end
 
-describe RouteOptions, type: [:controller, :routing] do
+RSpec.describe RouteOptions, type: :controller do
 
   after :all do
     Rails.application.reload_routes!
@@ -262,7 +262,7 @@ describe RouteOptions, type: [:controller, :routing] do
     end
 
     it 'keeps track for remoted methods on the controller' do
-      TestMethodRoute.remoted?(:foo).should be_true
+      TestMethodRoute.remoted?(:foo).should be_truthy
     end
   end
 
@@ -302,7 +302,7 @@ describe RouteOptions, type: [:controller, :routing] do
     end
 
     it 'keeps track for remoted methods on the controller' do
-      TestAltModel.remoted?(:bar).should be_true
+      TestAltModel.remoted?(:bar).should be_truthy
     end
   end
 

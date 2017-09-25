@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe VersionedUrlFor do
+RSpec.describe VersionedUrlFor do
 
   class VersionedModelTest
     attr_accessor :to_param
@@ -15,7 +15,7 @@ describe VersionedUrlFor do
 
   module API
     module V1
-      class TestVersionsController < ActionController::Base
+      class TestVersionsController < ActionController::API
         include VersionedUrlFor
 
         def api_v1_test_version_path model

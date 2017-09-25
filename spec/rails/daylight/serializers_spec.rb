@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::Serializers do
+RSpec.describe Daylight::Serializers do
 
   class SerializerTest < ActiveRecord::Base
     belongs_to :serializer_test_with_custom

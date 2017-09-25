@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::Helpers do
+RSpec.describe Daylight::Helpers do
   class HelperTestClass
     include Daylight::Helpers
 

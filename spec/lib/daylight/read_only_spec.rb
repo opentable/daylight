@@ -4,7 +4,7 @@ class TestReadOnly < Daylight::API
   has_one :child, class_name: 'TestReadOnly'
 end
 
-describe Daylight::ReadOnly do
+RSpec.describe Daylight::ReadOnly do
   def parse_xml(xml)
     data = Hash.from_xml(xml)
 

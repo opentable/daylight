@@ -24,7 +24,7 @@ class RefinersTestClass < RefinerMockActiveRecordBase
   end
 end
 
-describe Daylight::Refiners::AttributeSeive do
+RSpec.describe Daylight::Refiners::AttributeSeive do
   let(:valid_attribute_names) { %w[foo bar baz] }
 
   describe 'with invalid attributes' do
@@ -190,8 +190,8 @@ describe Daylight::Refiners do
     end
 
     it "keeps track of remoted methods" do
-      RefinersTestClass.remoted?(:foo).should be_true
-      RefinersTestClass.remoted?(:not_a_remoted_method).should be_false
+      RefinersTestClass.remoted?(:foo).should be_truthy
+      RefinersTestClass.remoted?(:not_a_remoted_method).should be_falsey
 
       RefinersTestClass.remoted_methods.should == [:foo]
     end
@@ -210,4 +210,3 @@ describe Daylight::Refiners do
     end
   end
 end
-

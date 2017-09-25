@@ -13,6 +13,8 @@ require 'webmock/rspec'
 
 require 'factory_girl'
 require 'faker'
+require 'pry'
+require 'pry-nav'
 
 WebMock.disable_net_connect!
 
@@ -31,11 +33,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  if Rails::VERSION::MAJOR >= 5
-    config.use_transactional_tests = true
-  else
-    config.use_transactional_fixtures = true
-  end
+  config.use_transactional_fixtures = true
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of

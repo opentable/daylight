@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::ReflectionExt do
+RSpec.describe Daylight::ReflectionExt do
 
   module TestAPI
     module V1; end

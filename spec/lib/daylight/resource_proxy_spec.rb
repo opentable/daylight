@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::ResourceProxy do
+RSpec.describe Daylight::ResourceProxy do
 
   class ProxyTestClass < Daylight::API
     scopes :foo, :bar
