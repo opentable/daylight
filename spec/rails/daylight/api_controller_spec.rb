@@ -101,13 +101,13 @@ RSpec.describe Daylight::APIController, type: :controller do
     end
 
     describe "rescue from ArgumentError" do
-      it"has status of bad_request" do
+      it "has status of bad_request" do
         get :raise_argument_error
 
         assert_response :bad_request
       end
 
-      it"returns the error message as JSON" do
+      it "returns the error message as JSON" do
         get :raise_argument_error
 
         body = JSON.parse(response.body)
@@ -116,13 +116,13 @@ RSpec.describe Daylight::APIController, type: :controller do
     end
 
     describe "rescue from RecordInvalid" do
-      it"has status of unprocessable_entity" do
+      it "has status of unprocessable_entity" do
         get :raise_record_invalid_error
 
         assert_response :unprocessable_entity
       end
 
-      it"returns the record's errors as JSON" do
+      it "returns the record's errors as JSON" do
         get :raise_record_invalid_error
 
         body = JSON.parse(response.body)
@@ -143,13 +143,13 @@ RSpec.describe Daylight::APIController, type: :controller do
         end
       end
 
-      it"has status of unprocessable_entity" do
+      it "has status of unprocessable_entity" do
         post :create, params: {suite: {unpermitted: 'attr'}}
 
         assert_response :unprocessable_entity
       end
 
-      it"reports errors for unpermitted attributes" do
+      it "reports errors for unpermitted attributes" do
         post :create, params: {suite: {unpermitted: 'attr'}}
 
         body = JSON.parse(response.body)
@@ -168,13 +168,13 @@ RSpec.describe Daylight::APIController, type: :controller do
         end
       end
 
-      it"has status of unprocessable_entity" do
+      it "has status of unprocessable_entity" do
         post :create, params: {case: {suite_id: 0}}
 
         assert_response :bad_request
       end
 
-      it"returns the record's errors as JSON" do
+      it "returns the record's errors as JSON" do
         post :create, params: {case: {name: 'unpermitted'}}
 
         assert_response :bad_request
@@ -188,31 +188,31 @@ RSpec.describe Daylight::APIController, type: :controller do
   describe "default configuration" do
     let(:controller) { SuitesController }
 
-    it"uses controller name for record name" do
+    it "uses controller name for record name" do
       controller.record_name.should == 'suite'
     end
 
-    it"uses controller name for model name" do
+    it "uses controller name for model name" do
       controller.model_name.should == 'suite'
     end
 
-    it"uses 'collection' for collection name" do
+    it "uses 'collection' for collection name" do
       controller.collection_name.should == 'collection'
     end
 
-    it"uses controller name for model key" do
+    it "uses controller name for model key" do
       controller.send(:model_key).should == :suite
     end
 
-    it'determines model class' do
+    it 'determines model class' do
       controller.send(:model).should == Suite
     end
 
-    it'delegates primary key to model class' do
+    it 'delegates primary key to model class' do
       controller.send(:primary_key).should == 'id'
     end
 
-    it'access record ivar' do
+    it 'access record ivar' do
       c = controller.new
 
       c.send(:record=, 'foo')
@@ -220,7 +220,7 @@ RSpec.describe Daylight::APIController, type: :controller do
       c.instance_variable_get('@suite').should == c.send(:record)
     end
 
-    it'access collection ivar' do
+    it 'access collection ivar' do
       c = controller.new
 
       c.send(:collection=, %w[foo bar])
@@ -232,31 +232,31 @@ RSpec.describe Daylight::APIController, type: :controller do
   describe "custom configuration" do
     let(:controller) { TestCasesController }
 
-    it"overrides record name" do
+    it "overrides record name" do
       controller.record_name.should == :result
     end
 
-    it"overrides collection name" do
+    it "overrides collection name" do
       controller.collection_name.should == :results
     end
 
-    it"overrides model name" do
+    it "overrides model name" do
       controller.model_name.should == :case
     end
 
-    it'determines model key' do
+    it 'determines model key' do
       controller.send(:model_key).should == :case
     end
 
-    it'determines model class' do
+    it 'determines model class' do
       controller.send(:model).should == Case
     end
 
-    it'delegates primary key to determined model class' do
+    it 'delegates primary key to determined model class' do
       controller.send(:primary_key).should == 'test_id'
     end
 
-    it'access record ivar' do
+    it 'access record ivar' do
       c = controller.new
 
       c.send(:record=, 'foo')
@@ -264,7 +264,7 @@ RSpec.describe Daylight::APIController, type: :controller do
       c.instance_variable_get('@result').should == c.send(:record)
     end
 
-    it'access collection ivar' do
+    it 'access collection ivar' do
       c = controller.new
 
       c.send(:collection=, %w[foo bar])
@@ -278,13 +278,13 @@ RSpec.describe Daylight::APIController, type: :controller do
     let(:cases_controller)  { TestCasesController.new }  # handles some
     let(:errors_controller) { TestErrorsController.new } # handles none
 
-    it'handles no API actions by default' do
+    it 'handles no API actions by default' do
       Daylight::APIController::API_ACTIONS.each do |action|
         errors_controller.should_not respond_to(action)
       end
     end
 
-    it'handles some API actions but not others' do
+    it 'handles some API actions but not others' do
       allowed = [:create, :update, :destroy]
       denied  = Daylight::APIController::API_ACTIONS.dup - allowed
 
@@ -297,7 +297,7 @@ RSpec.describe Daylight::APIController, type: :controller do
       end
     end
 
-    it'handles all API actions' do
+    it 'handles all API actions' do
       Daylight::APIController::API_ACTIONS.each do |action|
         suites_controller.should respond_to(action)
       end
@@ -328,7 +328,7 @@ RSpec.describe Daylight::APIController, type: :controller do
       JSON.parse(body).with_indifferent_access
     end
 
-    it'responds to index' do
+    it 'responds to index' do
       get :index
 
       results = parse_collection(response.body)
@@ -340,7 +340,7 @@ RSpec.describe Daylight::APIController, type: :controller do
       names.should be_include(suite3.name)
     end
 
-    it'responds to index with refine_by' do
+    it 'responds to index with refine_by' do
       get :index, params: { filters: {switch: true}}
 
       results = parse_collection(response.body)
@@ -350,7 +350,7 @@ RSpec.describe Daylight::APIController, type: :controller do
       names.should be_include(suite3.name)
     end
 
-    it'creates a record' do
+    it 'creates a record' do
       post :create, params: {suite: suite = FactoryGirl.attributes_for(:suite)}
 
       result = parse_record(response.body)
@@ -361,7 +361,7 @@ RSpec.describe Daylight::APIController, type: :controller do
     end
 
     describe :id_params do
-      it'shows a record' do
+      it 'shows a record' do
         get :show, params: {id: suite2.id}
 
         result = parse_record(response.body)
@@ -370,7 +370,7 @@ RSpec.describe Daylight::APIController, type: :controller do
         result[:switch].should == suite2[:switch]
       end
 
-      it'shows a record by natural_key' do
+      it 'shows a record by natural_key' do
         get :show, params: {id: suite2.name}
 
         result = parse_record(response.body)
@@ -379,29 +379,29 @@ RSpec.describe Daylight::APIController, type: :controller do
         result[:switch].should == suite2[:switch]
       end
 
-      it'throws error when no record' do
+      it 'throws error when no record' do
         no_record_id = Suite.maximum(:id) + 1
         expect { get :show, params: {id: no_record_id} }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
-      it'throws error when no record by natural_id' do
+      it 'throws error when no record by natural_id' do
         expect { get :show, params: {id: 'wibble'} }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
-    it'updates a record' do
+    it 'updates a record' do
       patch :update, params: {id: suite3.id, suite: {name: 'Rik Mayall'}}
 
       Suite.find(suite3.id).name.should == 'Rik Mayall'
     end
 
-    it'deletes a record' do
+    it 'deletes a record' do
       delete :destroy, params: {id: suite1.id}
 
       expect { Suite.find(suite1.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    it'retrieves associated records' do
+    it 'retrieves associated records' do
       get :associated, params: {id: suite1.id, associated: 'cases'}
 
       results = parse_collection(response.body)
@@ -413,7 +413,7 @@ RSpec.describe Daylight::APIController, type: :controller do
       test_ids.should be_include(suite1.cases[2].id)
     end
 
-    it'retrieves associated records with refine_by' do
+    it 'retrieves associated records with refine_by' do
       get :associated, params: {id: suite1.id, associated: 'cases', limit: 1}
 
       results = parse_collection(response.body)
@@ -422,7 +422,7 @@ RSpec.describe Daylight::APIController, type: :controller do
       results.first['test_id'].should == suite1.cases.first.id
     end
 
-    it'retrieves remoted records' do
+    it 'retrieves remoted records' do
       get :remoted, params: {id: suite1.id, remoted: 'odd_cases'}
 
       results = parse_collection(response.body)
@@ -436,7 +436,7 @@ RSpec.describe Daylight::APIController, type: :controller do
     end
 
     describe :where_params do
-      it'just returns params if itis not a strong parameter object' do
+      it 'just returns params if itis not a strong parameter object' do
         controller.stub params: {wibble: 'foo'}
 
         get :index
@@ -444,25 +444,25 @@ RSpec.describe Daylight::APIController, type: :controller do
         assert_response :success
       end
 
-      it'only allow allowed where params' do
+      it 'only allow allowed where params' do
         get :index, params: {limit: 3}
 
         assert_response :success
       end
 
-      it'allows filters' do
+      it 'allows filters' do
         get :index, params: {filters: {name: 'bar'}}
 
         assert_response :success
       end
 
-      it'allows any scopes' do
+      it 'allows any scopes' do
         get :index, params: {scopes: ['all_suites']}
 
         assert_response :success
       end
 
-      it'knocks back bad params' do
+      it 'knocks back bad params' do
         get :index, params: {an_unpermitted_param: 'foo'}
 
         assert_response :unprocessable_entity

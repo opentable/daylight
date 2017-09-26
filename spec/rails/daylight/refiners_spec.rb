@@ -11,9 +11,21 @@ end
 
 class RefinersTestClass < RefinerMockActiveRecordBase
   set_natural_key :name
+  attr_reader :params
 
   scope :scope_a, -> { 'a' }
   scope :scope_b, -> { 'b' }
+
+  def initialize(params = {})
+    params.each do |k, v|
+      inst_var = instance_variable_set("@#{k}", v)
+      self.class.send(:define_method, k) {inst_var}
+    end
+  end
+
+  def [](val)
+    instance_variable_get("@#{val}")
+  end
 
   def self.find(id)
     RefinersTestClass.new
