@@ -2,16 +2,24 @@ module RenderJsonMeta
   extend ActiveSupport::Concern
 
   included do
-    ##
     # Hooks into ActiveModelSerializer's ActionController::Serialization `_render_option_json` method
-    def _render_option_json(resource, options)
+    def _render_with_renderer_json(resource, options)
+      metadata = add_metadata(resource, options)
+      options[:meta] = metadata unless metadata.blank?
+      json = ActiveModel::Serializer.build_json(self, resource, options)
+      if json
+        super(json, options)
+      else
+        super(resource, options)
+      end
+    end
+
+    def add_metadata(resource, options)
       # All modules that are included will be able to add to the metadata hash
       metadata = (options[:meta] || {}).tap do |metadata|
         _add_metadata(resource, metadata)
       end
       options[:meta] = metadata unless metadata.blank?
-
-      super
     end
   end
 
@@ -93,18 +101,4 @@ module RenderJsonMeta
         metadata[class_key].merge!({ attribute_key => results })
       end
     end
-end
-
-# Hook all of the RenderJsonMeta modules into ActionController
-# Each module will be chained together on the `_add_meta_data` method.
-ActiveSupport.on_load(:action_controller) do
-  include ::RenderJsonMeta
-
-  # Modules could not be included within the concern, likely
-  # because the context is lost from her in the on_load block
-  include ::RenderJsonMeta::MetadataDefault
-  include ::RenderJsonMeta::MetadataNaturalKey
-  include ::RenderJsonMeta::MetadataWhereValues
-  include ::RenderJsonMeta::MetadataNestedResources
-  include ::RenderJsonMeta::MetadataReadOnly
 end

@@ -8,7 +8,8 @@ require 'extensions/deep_munge_fix'             # fix to maintain empty arrays i
 require 'extensions/has_one_serializer_ext'     # serializer recognizes belong_to :through association
 require 'extensions/nested_attributes_ext'      # associates two previously existing records
 require 'extensions/read_only_attributes'       # serializer support for `read_only` attributes
-require 'extensions/render_json_meta'           # adds metadata to the json response
+require 'extensions/render_json_meta'      # adds metadata to the json response
+require 'extensions/action_controller_ext'      # adds metadata to the json response
 require 'extensions/request_id_ext'             # adds additional characters in request_id
 require 'extensions/route_options'              # adds associated, remoted options to routes
 require 'extensions/versioned_url_for'          # uses versioned paths for `url_for`
