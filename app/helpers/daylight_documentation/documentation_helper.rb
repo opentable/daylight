@@ -51,7 +51,7 @@ module DaylightDocumentation::DocumentationHelper
   private
 
     def route_verb(route)
-      %w[GET POST PUT PATCH DELETE].find {|verb| verb =~ route.verb}
+      [/GET/, /POST/, /PUT/, /PATCH/, /DELETE/].find {|verb| verb =~ route.verb}
     end
 
 end

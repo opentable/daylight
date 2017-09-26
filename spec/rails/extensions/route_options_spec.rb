@@ -1,25 +1,25 @@
 require 'spec_helper'
 
-class TestAssociatedRouteController < ActionController::API
+class TestAssociatedRouteController < ActionController::Base
   def associated
-    render text: [params[:controller], params[:id], params[:associated]].join('/')
+    render json: [params[:controller], params[:id], params[:associated]].join('/')
   end
 end
 
 class TestAssociatedRoutesController < TestAssociatedRouteController
   def associated
-    render text: [params[:controller], params[:associated]].join('/')
+    render json: [params[:controller], params[:associated]].join('/')
   end
 end
 
-class TestMethodRoute < ActiveRecord::API;
+class TestMethodRoute < ActiveRecord::Base;
   def foo; end
   def bar; end
 end
 
-class TestMethodRouteController < ActionController::API
+class TestMethodRouteController < ActionController::Base
   def remoted
-    render text: [params[:controller], params[:id], params[:remoted]].join('/')
+    render json: [params[:controller], params[:id], params[:remoted]].join('/')
   end
 end
 
@@ -28,13 +28,13 @@ class TestAltModel < ActiveRecord::Base;
   def bar; end
 end
 
-class TestMethodRouteAltModelController < ActionController::API
+class TestMethodRouteAltModelController < ActionController::Base
   def self.model
     TestAltModel
   end
 
   def remoted
-    render text: [params[:controller], params[:id], params[:remoted]].join('/')
+    render json: [params[:controller], params[:id], params[:remoted]].join('/')
   end
 end
 
@@ -71,7 +71,7 @@ RSpec.describe RouteOptions, type: :controller do
       end
 
       it 'respsonds to associated with expected params' do
-        get :associated, id: 1, associated: 'bars'
+        get :associated, params: {id: 1, associated: 'bars'}
 
         assert_response :success
 
@@ -102,7 +102,7 @@ RSpec.describe RouteOptions, type: :controller do
       end
 
       it 'respsonds to first associated with expected params' do
-        get :associated, id: 1, associated: 'bars'
+        get :associated, params: {id: 1, associated: 'bars'}
 
         assert_response :success
         response.body.should == 'test_associated_route/1/bars'
@@ -124,7 +124,7 @@ RSpec.describe RouteOptions, type: :controller do
       end
 
       it 'respsonds to last associated with expected params' do
-        get :associated, id: 1, associated: 'wibbles'
+        get :associated, params: {id: 1, associated: 'wibbles'}
 
         assert_response :success
         response.body.should == 'test_associated_route/1/wibbles'
@@ -163,7 +163,7 @@ RSpec.describe RouteOptions, type: :controller do
       end
 
       it 'respsonds to associated with expected params' do
-        get :associated, associated: 'bars'
+        get :associated, params: {associated: 'bars'}
 
         assert_response :success
 
@@ -193,7 +193,7 @@ RSpec.describe RouteOptions, type: :controller do
       end
 
       it 'respsonds to first associated with expected params' do
-        get :associated, associated: 'bars'
+        get :associated, params: {associated: 'bars'}
 
         assert_response :success
         response.body.should == 'test_associated_routes/bars'
@@ -214,7 +214,7 @@ RSpec.describe RouteOptions, type: :controller do
       end
 
       it 'respsonds to last associated with expected params' do
-        get :associated, associated: 'wibbles'
+        get :associated, params: {associated: 'wibbles'}
 
         assert_response :success
         response.body.should == 'test_associated_routes/wibbles'
@@ -250,7 +250,7 @@ RSpec.describe RouteOptions, type: :controller do
     end
 
     it 'respsonds to method with expected params' do
-      get :remoted, id: 1, remoted: 'foo'
+      get :remoted, params: {id: 1, remoted: 'foo'}
 
       assert_response :success
 
@@ -290,7 +290,7 @@ RSpec.describe RouteOptions, type: :controller do
     end
 
     it 'respsonds to method with expected params' do
-      get :remoted, id: 1, remoted: 'bar'
+      get :remoted, params: {id: 1, remoted: 'bar'}
 
       assert_response :success
 

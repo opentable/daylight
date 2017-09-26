@@ -11,11 +11,8 @@ end
 
 # this implicitly tests read_only attributes
 class ActiveModel::Serializer
-  binding.pry
-  
   def build_json(controller, resource, options)
     # All modules that are included will be able to add to the metadata hash
-    binding.pry
     metadata = (options[:meta] || {}).tap do |metadata|
       _add_metadata(resource, metadata)
     end
@@ -180,10 +177,9 @@ RSpec.describe RenderJsonMeta, type: :controller do
 
   describe "read_only" do
     it 'renders on record' do
-      get :show, id: record1.id
+      get :show, params: {id: record1.id}
       # tests for no '?' on valid in both the attribute and read_only names
       json = JSON.parse(response.body)
-      binding.pry
       json['render_json_meta_test'].keys.should include('valid')
       json['meta']['render_json_meta_test'].should include({'read_only' => ['name', 'valid']})
     end
@@ -196,7 +192,7 @@ RSpec.describe RenderJsonMeta, type: :controller do
     end
 
     it 'renders no metadata' do
-      get :child, id: associated.id
+      get :child, params: {id: associated.id}
 
       json = JSON.parse(response.body)
       json.keys.should_not include('meta')
@@ -205,7 +201,7 @@ RSpec.describe RenderJsonMeta, type: :controller do
 
   describe "nested_resources" do
     it 'renders on record' do
-      get :show, id: record1.id
+      get :show, params: {id: record1.id}
 
       # tests for no '?' on valid in both the attribute and read_only names
       json = JSON.parse(response.body)
@@ -220,7 +216,7 @@ RSpec.describe RenderJsonMeta, type: :controller do
     end
 
     it 'renders no metadata' do
-      get :child, id: associated.id
+      get :child, params: {id: associated.id}
 
       json = JSON.parse(response.body)
       json.keys.should_not include('meta')
@@ -228,7 +224,7 @@ RSpec.describe RenderJsonMeta, type: :controller do
   end
 
   it 'renders where_values' do
-    get :associated, id: record1.id, name: associated.name
+    get :associated, params: {id: record1.id, name: associated.name}
 
     json = JSON.parse(response.body)
     json['meta']['where_values'].should == {'render_json_meta_test_id' => associated.render_json_meta_test_id , 'name' => associated.name }

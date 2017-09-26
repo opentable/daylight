@@ -15,7 +15,7 @@ RSpec.describe VersionedUrlFor do
 
   module API
     module V1
-      class TestVersionsController < ActionController::API
+      class TestVersionsController < ActionController::Base
         include VersionedUrlFor
 
         def api_v1_test_version_path model

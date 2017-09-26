@@ -237,7 +237,7 @@ module Daylight
       #     Daylight::Mock.setup
       def setup
         setup_rspec    if Module.const_defined? "RSpec"
-        setup_minitest if Module.qualified_const_defined?("MiniTest::Spec")
+        setup_minitest    if Module.const_defined? "MiniTest::Spec"
       end
 
       private

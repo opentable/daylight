@@ -5,7 +5,7 @@ module MigrationHelper
     attr_accessor :migrations
 
     def migrate &block
-      migrations << Class.new(ActiveRecord::Migration) do
+      migrations << Class.new(ActiveRecord::Migration[4.2]) do
         define_method :change, &block
       end
     end
@@ -18,7 +18,7 @@ module MigrationHelper
   included do
     before(:all) do
       self.class.migrations.each do |migration|
-       ActiveRecord::Migration.suppress_messages do
+       ActiveRecord::Migration[4.2].suppress_messages do
          migration.migrate(:up)
        end
       end
@@ -26,7 +26,7 @@ module MigrationHelper
 
     after(:all) do
       self.class.migrations.each do |migration|
-        ActiveRecord::Migration.suppress_messages do
+        ActiveRecord::Migration[4.2].suppress_messages do
           migration.migrate(:down)
         end
       end
