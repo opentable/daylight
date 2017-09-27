@@ -58,7 +58,7 @@ describe 'associations' do
       API::Post.create(title: 'Consequences of Legume Containment Failure')
 
       post = API::Post.first
-      post.comments.should be_empty
+      true == post.comments.empty?
       post.comments << API::Comment.new(content: 'Last!')
       post.save.should be_truthy
 
@@ -112,8 +112,6 @@ describe 'associations' do
   end
 
   describe 'assocating nested resources' do
-    let(:post) { API::Post.first }
-
     before do
       doug = User.create(name: 'dmcinnes')
       reid = User.create(name: 'reidmix')
@@ -126,6 +124,7 @@ describe 'associations' do
     end
 
     it 'associates existing child resources' do
+      post = API::Post.first
       post.author = API::User.find_by(name: 'reidmix')
       post.save.should be_truthy
 
@@ -134,6 +133,7 @@ describe 'associations' do
     end
 
     it 'associates existing child resources into a collection' do
+      post = API::Post.first
       comment = API::User.find_by(name: 'dmcinnes').comments.first
       comment.should_not be_nil
       post.comments << comment
@@ -172,7 +172,7 @@ describe 'associations' do
       post.save.should be_truthy
 
       post = API::Post.first
-      post.comments.should be_empty
+      true.should == post.comments.empty?
     end
   end
 

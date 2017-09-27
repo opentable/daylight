@@ -11,6 +11,7 @@ require 'rspec/autorun'
 require 'daylight/api'
 require 'api'
 require 'pry'
+require 'pry-nav'
 
 Daylight::API.setup! endpoint: 'http://daylight.test', version: 'v1'
 
