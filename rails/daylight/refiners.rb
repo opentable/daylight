@@ -131,7 +131,7 @@ module Daylight::Refiners
       params = params.with_indifferent_access rescue params.to_h
       params.each do |k, v|
         if dummy[k].class == TrueClass || dummy[k].class == FalseClass
-          params[k] = v.to_s == "true"
+          ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include? v
         end
       end
       where params.assert_valid_keys(attribute_names + reflection_names)
