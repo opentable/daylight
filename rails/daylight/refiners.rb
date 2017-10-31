@@ -2,6 +2,7 @@
 # Methods in which to refine a query by a model's scopes or attributes
 module Daylight::Refiners
 
+  TRUE_VALUES = [true, 1, '1', 't', 'T', 'true', 'TRUE'].freeze
   ##
   # Prepend class methods onto ActiveResource
   def self.prepended(base)
@@ -131,7 +132,7 @@ module Daylight::Refiners
       params = params.with_indifferent_access rescue params.to_h
       params.each do |k, v|
         if dummy[k].class == TrueClass || dummy[k].class == FalseClass
-          params[k] = ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include? v
+          params[k] =  TRUE_VALUES.include? v
         end
       end
       where params.assert_valid_keys(attribute_names + reflection_names)
