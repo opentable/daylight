@@ -92,9 +92,10 @@ module Daylight::Associations
     # ActiveResource::Associations#belongs_to
 
     def belongs_to name, options={}
+
       create_reflection(:belongs_to, name, options).tap do |reflection|
 
-        nested_attribute_key = "#{reflection.name}_attributes"
+        nested_attribute_key = "#{reflection.name}"
 
         # setup the resource_proxy to fetch the results
         define_cached_method reflection.name, cache_key: nested_attribute_key do
@@ -231,7 +232,7 @@ module Daylight::Associations
         define_method(uncached_method_name, block)
 
         # define the cached wrapper around the uncached method
-        define_method method_name do
+        define_method(method_name) do
           ivar_name  = :"@#{method_name}"
           cache_key  = options[:cache_key] || method_name
           attributes = options.has_key?(:index) ? @attributes[options[:index]] : @attributes
@@ -244,7 +245,6 @@ module Daylight::Associations
             else
               send(uncached_method_name)
             end
-
           # Track of the association hashcode for changes
           association_hashcodes[method_name] = value.hash
 
