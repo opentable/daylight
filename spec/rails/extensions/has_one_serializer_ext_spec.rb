@@ -36,7 +36,7 @@ class EmbedHasOneSerializerTestSerializer < ActiveModel::Serializer
   has_one :associated_through_test, through: :associated_test   # tests through
 end
 
-describe HasOneSerializerExt, type: [:controller, :routing] do
+RSpec.describe HasOneSerializerExt, type: :controller do
 
   def self.controller_class
     HasOneSerializerTestController
@@ -91,7 +91,7 @@ describe HasOneSerializerExt, type: [:controller, :routing] do
   #
 
   it 'includes association id' do
-    get :show, id: record.id
+    get :show, params: {id: record.id}
 
     json = JSON.parse(response.body)['has_one_serializer_test']
     json['associated_test_id'].should == record.associated_test_id
@@ -99,7 +99,7 @@ describe HasOneSerializerExt, type: [:controller, :routing] do
   end
 
   it 'includes through association hash with ids' do
-    get :show, id: record.id
+    get :show, params: {id: record.id}
 
     json = JSON.parse(response.body)['has_one_serializer_test']
     json['associated_test_attributes'].should == {
@@ -113,14 +113,14 @@ describe HasOneSerializerExt, type: [:controller, :routing] do
   #
 
   it 'includes association' do
-    get :embed, id: record.id
+    get :embed, params: {id: record.id}
 
     json = JSON.parse(response.body)['embed_has_one_serializer_test']
     json['associated_test'].should == record.associated_test.attributes
   end
 
   it 'includes association hash' do
-    get :embed, id: record.id
+    get :embed, params: {id: record.id}
 
     json = JSON.parse(response.body)['embed_has_one_serializer_test']
     json['associated_test_attributes'].should == {

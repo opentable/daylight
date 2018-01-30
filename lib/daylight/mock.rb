@@ -1,6 +1,6 @@
 require 'rack'
 
-##
+#
 # Simple mocking framework that simplifies the process of writing tests for code that uses the Daylight client library.
 #
 # Works with both Rspec and TestUnit/Minitest.
@@ -236,8 +236,8 @@ module Daylight
       #
       #     Daylight::Mock.setup
       def setup
+        setup_minitest if Module.const_defined? "MiniTest::Spec"
         setup_rspec    if Module.const_defined? "RSpec"
-        setup_minitest if Module.qualified_const_defined?("MiniTest::Spec")
       end
 
       private
@@ -246,7 +246,6 @@ module Daylight
 
           RSpec.configure do |config|
             config.include Daylight::Mock
-
             config.before(:each) do
               capture_api_requests
             end

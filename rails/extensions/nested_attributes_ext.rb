@@ -127,7 +127,7 @@ ERROR
       reflection = association.reflection
       if reflection.try(:has_and_belongs_to_many?) ||
          (reflection.try(:parent_reflection) &&
-          reflection.parent_reflection.last.try(:macro) == :has_and_belongs_to_many)
+          reflection.parent_reflection.try(:macro) == :has_and_belongs_to_many)
         'has_and_belongs_to_many'
       elsif reflection.options.has_key?(:through)
         'has_many :through'

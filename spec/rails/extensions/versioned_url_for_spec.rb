@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe VersionedUrlFor do
+RSpec.describe VersionedUrlFor do
 
   class VersionedModelTest
     attr_accessor :to_param

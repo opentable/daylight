@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::RequestIdExt, type: [:controller] do
+RSpec.describe Daylight::RequestIdExt, type: :controller do
   let(:uuid_regex) { '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' }
   let(:headers)    { {} }
   let(:app)        { double(:app, call: [nil,headers,nil]) }

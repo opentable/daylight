@@ -8,7 +8,7 @@ class IsExtractableTest < Hash
   end
 end
 
-describe Array do
+RSpec.describe Array do
   describe :extract_options do
     it 'returns options' do
       [foo: 'bar'].extract_options.should == {foo: 'bar'}

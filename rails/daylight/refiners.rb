@@ -2,6 +2,7 @@
 # Methods in which to refine a query by a model's scopes or attributes
 module Daylight::Refiners
 
+  TRUE_VALUES = [true, 1, '1', 't', 'T', 'true', 'TRUE'].freeze
   ##
   # Prepend class methods onto ActiveResource
   def self.prepended(base)
@@ -126,7 +127,15 @@ module Daylight::Refiners
     # Supplies where conditions and returns the resulting +ActiveRecord::Relation+.
     # Raises +ArgumentError+ if the keys are not valid attributes on the model.
     def filter_by params
-      where (params||{}).with_indifferent_access.assert_valid_keys(attribute_names + reflection_names)
+      params = params || {}
+      dummy = self.new(params)
+      params = params.with_indifferent_access rescue params.to_h
+      params.each do |k, v|
+        if dummy[k].class == TrueClass || dummy[k].class == FalseClass
+          params[k] =  TRUE_VALUES.include? v
+        end
+      end
+      where params.assert_valid_keys(attribute_names + reflection_names)
     end
 
     ##

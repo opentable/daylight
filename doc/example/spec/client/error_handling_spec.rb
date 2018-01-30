@@ -3,23 +3,23 @@ require 'spec_helper'
 describe 'error handling' do
   it 'exposes client validation errors' do
     post = API::Post.new(body: 'what? no title?')
-    post.save.should be_false
+    post.save.should be_falsey
     post.errors.messages[:base].should include("Title can't be blank")
   end
 
   it 'reports non-permitted strong parameter errors' do
     blog = API::Blog.new(description: 'is not allowed')
-    blog.save.should be_false
+    blog.save.should be_falsey
     blog.errors.messages[:description].should include("unpermitted parameter")
   end
 
   it 'reports on bad create attributes' do
     post = API::Post.new(foo: 'bar')
-    expect{ post.save }.to raise_error(ActiveResource::BadRequest, /unknown attribute: foo/i)
+    expect{ post.save }.to raise_error(ActiveResource::BadRequest, /unknown attribute 'foo'/i)
   end
 
   it 'reports on bad query parameters' do
-    expect{ API::Post.find_by(foo: 'bar') }.to raise_error(ActiveResource::BadRequest, /unknown key: "?foo"?/i)
+    expect{ API::Post.find_by(foo: 'bar') }.to raise_error(ActiveResource::BadRequest, /unknown attribute 'foo'/i)
   end
 
   it 'reports on invalid server-side statements' do

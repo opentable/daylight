@@ -8,7 +8,7 @@ describe 'building' do
       post.should_not be_new
 
       post.body = "Ranked list of the 100 best albums so far in 2014"
-      post.save.should be_true
+      post.save.should be_truthy
     end
 
     it 'will instantiate but not save objects with validation errors' do
@@ -34,7 +34,7 @@ describe 'building' do
         title: "Ranked list of the 100 best albums so far in 2014"
       })
       post.should be_new
-      post.save.should be_true
+      post.save.should be_truthy
     end
   end
 
@@ -50,7 +50,7 @@ describe 'building' do
       comment = post.comments.first_or_initialize(content: "Am I the first comment?")
       comment.should be_new
       comment.post_id.should == post.id
-      comment.save.should be_true
+      comment.save.should be_truthy
     end
 
     it 'also works with refinements' do
@@ -62,7 +62,7 @@ describe 'building' do
 
       # Update the message
       comment.content = "You really like me when I said: '#{comment.content}'"
-      comment.save.should be_true
+      comment.save.should be_truthy
     end
   end
 

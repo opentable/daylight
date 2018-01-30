@@ -5,17 +5,22 @@
 #
 # See
 # ActionDispatch::RequestId
-
 module Daylight::RequestIdExt
+  def call(env)
+    req = ActionDispatch::Request.new env
+    if env["HTTP_X_REQUEST_ID"].presence
+      req.request_id = x_make_request_id(req.x_request_id)
+    else
+      req.request_id = make_request_id(req.x_request_id)
+    end
+    @app.call(env).tap { |_status, headers, _body| headers[ActionDispatch::RequestId::X_REQUEST_ID] = req.request_id }
+  end
   private
-    def external_request_id(env)
-      if request_id = env["HTTP_X_REQUEST_ID"].presence
-        request_id.gsub(/[^\w\/\-+=]/, "").first(255)
-      end
+    def x_make_request_id(request_id)
+      request_id.gsub(/[^\w\/\-+=]/, "").first(255)
     end
 end
 
-# Mix into ActionDispatch::RequestId
-ActiveSupport.on_load :before_initialize do
-  ActionDispatch::RequestId.send(:prepend, Daylight::RequestIdExt)
+class ActionDispatch::RequestId
+  prepend Daylight::RequestIdExt
 end

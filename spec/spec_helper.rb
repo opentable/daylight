@@ -13,6 +13,8 @@ require 'webmock/rspec'
 
 require 'factory_girl'
 require 'faker'
+require 'pry'
+require 'pry-nav'
 
 WebMock.disable_net_connect!
 

@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe DaylightDocumentation::DocumentationController do
+RSpec.describe DaylightDocumentation::DocumentationController, type: :controller do
 
   class TestModel < ActiveRecord::Base
   end
 
   it "renders an index" do
-    get :index, :use_route => :daylight
+    get :index, params: {use_route: :daylight}
 
     assert_response :success
 
@@ -14,7 +14,7 @@ describe DaylightDocumentation::DocumentationController do
   end
 
   it "renders a model view" do
-    get :model, model: 'test_model', :use_route => :daylight
+    get :model, params: {model: 'test_model', use_route: :daylight}
 
     assert_response :success
 

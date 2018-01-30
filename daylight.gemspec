@@ -15,14 +15,14 @@ Gem::Specification.new do |s|
     allow your ActiveResource client API to perform more like to ActiveRecord
   DESC
 
-  s.add_runtime_dependency 'activeresource',           '~> 4.0.0'
-  s.add_runtime_dependency 'haml',                     '~> 4.0.5'
-  s.add_runtime_dependency 'actionpack-page_caching',  '~> 1.0.2'
+  s.add_runtime_dependency 'activeresource',           '>= 4.1.0'
+  s.add_runtime_dependency 'haml',                     '~> 5.0.4'
+  s.add_runtime_dependency 'actionpack-page_caching',  '~> 1.1.0'
   s.add_runtime_dependency 'hanna-bootstrap',          '~> 0.0.5'
   s.add_runtime_dependency 'active_model_serializers', '~> 0.8.2'
 
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rspec-rails',    '~> 2.14.0'
+  s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'simplecov-rcov', '~> 0.2.3'
   s.add_development_dependency 'webmock',        '~> 1.18.0'
   s.add_development_dependency 'sqlite3'

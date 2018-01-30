@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::Params do
+RSpec.describe Daylight::Params do
 
   module HelperTest
     def helper_method

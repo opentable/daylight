@@ -109,7 +109,7 @@ module Daylight::Collection
 
       ##
       # Performs the work of merging known attributes to the supplied +attributes+
-      # on the resource, setting the +prefix_options+ to the known params and and
+      # on the resource, setting the +prefix_options+ to the known params and
       # returning the initialized resource.
       def initialize_resource attributes={}
         resource_class.new(attributes.update(known_attributes)).tap do |resource|

@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
   belongs_to :author, class_name: 'User'
 
   has_many :comments
-  has_many :commenters, -> { uniq }, through: :comments, class_name: 'User'
+  has_many :commenters, -> { distinct }, through: :comments, class_name: 'User'
   has_many :suppressed_comments, -> { where(spam: true) }, class_name: 'Comment'
 
   has_one :company, through: :blog

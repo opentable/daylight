@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::Errors do
+RSpec.describe Daylight::Errors do
 
   class BaseErrorTest < StandardError
     def initialize resposne, message=nill

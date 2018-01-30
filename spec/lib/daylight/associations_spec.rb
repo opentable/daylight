@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::Associations do
+RSpec.describe Daylight::Associations do
 
   class RelatedTestClass < Daylight::API
     self.include_format_in_path = false

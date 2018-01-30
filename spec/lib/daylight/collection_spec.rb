@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::Collection do
+RSpec.describe Daylight::Collection do
 
   class CollectionTestClass < Daylight::API
     scopes :foo, :bar

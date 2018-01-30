@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Daylight::RequestId do
+RSpec.describe Daylight::RequestId do
 
   let(:uuid_regex) { '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' }
   let(:request_id) { Daylight::RequestId.new }

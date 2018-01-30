@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'daylight/mock'
 
-describe Daylight::Mock do
+RSpec.describe Daylight::Mock do
   class Minitest::Spec ; end
   class Minitest::Test ; end
 
@@ -33,11 +33,11 @@ describe Daylight::Mock do
       end
 
       it "seeds the objects with ids" do
-        TestClient.find(:all).all? {|z| z.id.present? }.should be_true
+        TestClient.find(:all).all? {|z| z.id.present? }.should be_truthy
       end
 
       it "seeds the objects with any filters" do
-        TestClient.where(foo: 'bar').all? {|z| z.foo == 'bar' }.should be_true
+        TestClient.where(foo: 'bar').all? {|z| z.foo == 'bar' }.should be_truthy
       end
     end
 
@@ -49,18 +49,18 @@ describe Daylight::Mock do
       end
 
       it "seeds the responses with ids" do
-        TestClient.find(1).test_client_children.all? {|z| z.id.present? }.should be_true
+        TestClient.find(1).test_client_children.all? {|z| z.id.present? }.should be_truthy
       end
 
       it "seeds the objects with any filters" do
-        TestClient.find(1).test_client_children.where(foo: 'bar').all? {|z| z.foo == 'bar' }.should be_true
+        TestClient.find(1).test_client_children.where(foo: 'bar').all? {|z| z.foo == 'bar' }.should be_truthy
       end
     end
 
     describe 'update' do
       it "returns a new object with the updated attributes" do
         object = TestClient.find(1)
-        object.update_attributes(name: 'wibble').should be_true
+        object.update_attributes(name: 'wibble').should be_truthy
       end
     end
 
@@ -69,7 +69,7 @@ describe Daylight::Mock do
 
       it "updates the attributes" do
         object = TestClient.find(1)
-        object.patch(:test, {}, data).should be_true
+        object.patch(:test, {}, data).should be_truthy
       end
     end
 
@@ -77,7 +77,7 @@ describe Daylight::Mock do
       it "returns the created object" do
         object = TestClient.new(name: 'foo')
         object.name = 'foo'
-        object.save.should be_true
+        object.save.should be_truthy
         object.id.should_not be_nil
       end
     end
@@ -85,7 +85,7 @@ describe Daylight::Mock do
     describe 'destroy' do
       it "returns a new object with the updated attributes" do
         object = TestClient.find(1)
-        object.destroy.should be_true
+        object.destroy.should be_truthy
       end
     end
   end
@@ -129,7 +129,7 @@ describe Daylight::Mock do
       it "sets the target_object value for examination on create" do
         object = TestClient.new(code: 'foo')
         object.name = 'foo'
-        object.save.should be_true
+        object.save.should be_truthy
 
         daylight_mock.last_created(:test_clients).target_object.code.should == 'foo'
       end
