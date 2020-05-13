@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'activeresource',           '>= 4.1.0'
   s.add_runtime_dependency 'haml',                     '~> 5.0.4'
-  s.add_runtime_dependency 'actionpack-page_caching',  '~> 1.1.0'
+  s.add_runtime_dependency 'actionpack-page_caching',  '~> 1.2.1'
   s.add_runtime_dependency 'hanna-bootstrap',          '~> 0.0.5'
   s.add_runtime_dependency 'active_model_serializers', '~> 0.8.2'
 
